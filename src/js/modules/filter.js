@@ -763,14 +763,25 @@ Filter.prototype.filters ={
 			return rowVal === filterVal ? true : false;
 		}else{
 			if(typeof rowVal !== 'undefined' && rowVal !== null){
-				return String(rowVal).toLowerCase().indexOf(filterVal.toLowerCase()) > -1;
-			}
-			else{
+				return (String(rowVal).toLowerCase().indexOf(filterVal.toLowerCase()) > -1) 
+			}else{
 				return false;
 			}
 		}
 	},
 
+	//not contains the string
+	"notlike":function(filterVal, rowVal, rowData, filterParams){
+		if(filterVal === null || typeof filterVal === "undefined"){
+			return rowVal === filterVal ? false : true;
+		}else{
+			if(typeof rowVal !== 'undefined' && rowVal !== null){
+				return !(String(rowVal).toLowerCase().indexOf(filterVal.toLowerCase()) > -1) 
+			}else{
+				return true;
+			}
+		}
+	},
 	//contains the keywords
 	"keywords":function(filterVal, rowVal, rowData, filterParams){
 		var keywords = filterVal.toLowerCase().split(typeof filterParams.separator === "undefined" ? " " : filterParams.separator),
@@ -793,8 +804,7 @@ Filter.prototype.filters ={
 		}else{
 			if(typeof rowVal !== 'undefined' && rowVal !== null){
 				return String(rowVal).toLowerCase().startsWith(filterVal.toLowerCase());
-			}
-			else{
+			}else{
 				return false;
 			}
 		}
@@ -807,8 +817,7 @@ Filter.prototype.filters ={
 		}else{
 			if(typeof rowVal !== 'undefined' && rowVal !== null){
 				return String(rowVal).toLowerCase().endsWith(filterVal.toLowerCase());
-			}
-			else{
+			}else{
 				return false;
 			}
 		}
